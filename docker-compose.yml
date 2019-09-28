@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  client:
+    build: 
+      context: ./client/
+    image: client:latest
+    command: "npm start"
+  db:
+    image: postgres
+  server:
+    build:
+      context: ./server/
+    command: python ./server/manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
