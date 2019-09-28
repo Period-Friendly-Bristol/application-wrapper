@@ -8,6 +8,11 @@ services:
     command: "npm start"
   db:
     image: postgres
+    container_name: postgres-server
+    environment:
+      POSTGRES_PASSWORD: Pa55word
+      POSTGRES_USER: friendly
+      POSTGRES_DB: perioddignitydb
   server:
     build:
       context: ./server/
