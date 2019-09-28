@@ -6,3 +6,7 @@ This is a simple wrapper to host setup and Docker compose file for all the conta
 run `./setup.sh` in root folder
 
 If you encounter `command not found` error, run `chmod +x setup.sh`
+
+## Running Django Server
+
+run `docker-compose up server` 
