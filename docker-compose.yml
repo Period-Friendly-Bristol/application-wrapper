@@ -7,7 +7,7 @@ services:
     image: client:latest
     command: "npm start"
   db:
-    image: postgres
+    image: mdillon/postgis
     container_name: postgres-server
     ports:
       - "5432:5432"
@@ -18,7 +18,7 @@ services:
   server:
     build:
       context: ./server/
-    command: python ./server/manage.py runserver 0.0.0.0:8000
+    command: bash ./server/run.sh
     volumes:
       - .:/code
     ports:

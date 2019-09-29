@@ -10,3 +10,8 @@ If you encounter `command not found` error, run `chmod +x setup.sh`
 ## Running Django Server
 
 run `docker-compose up server` 
+
+## Running Commands in Server
+
+run `docker-compose run --rm server bash`
+
