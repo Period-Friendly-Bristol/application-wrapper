@@ -18,7 +18,7 @@ services:
   server:
     build:
       context: ./server/
-    command: bash ./server/run.sh
+    command: bash run.sh
     volumes:
       - .:/code
     ports:
