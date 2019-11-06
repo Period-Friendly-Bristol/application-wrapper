@@ -6,6 +6,8 @@ services:
       context: ./client/
     image: client:latest
     command: "npm start"
+    volumes:
+      - ./client:/app
     ports:
       - "3000:3000"
   db:
