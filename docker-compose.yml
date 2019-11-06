@@ -18,9 +18,10 @@ services:
   server:
     build:
       context: ./server/
+    container_name: django-server
     command: bash ./server/run.sh
     volumes:
-      - .:/code
+      - ./server:/code
     ports:
       - "8000:8000"
     depends_on:
