@@ -1,6 +1,43 @@
 version: '3'
-
 services:
+
+  # PostgreSQL database, with GIS extension.
+  db:
+    image: mdillon/postgis
+    container_name: postgres-server
+    ports:
+      - "${DATABASE_PORT}:${DATABASE_PORT}"
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+
+  # Django Python API.
+  server:
+    build:
+      context: ./server/
+    container_name: django-server
+    volumes:
+      - ./server:/code
+    ports:
+      - "${DJANGO_PORT}:${DJANGO_PORT}"
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - DATABASE_HOST=${DATABASE_HOST}
+      - DATABASE_PORT=${DATABASE_PORT}
+
+      - DJANGO_PORT=${DJANGO_PORT}
+      - DJANGO_ADMIN=${DJANGO_ADMIN}
+      - DJANGO_PASSWORD=${DJANGO_PASSWORD}
+      - SECRET_KEY=${SECRET_KEY}
+
+      - DEBUG=${DEBUG}
+    depends_on:
+      - db
+
+  # ReactJS front-end website.
   client:
     build: 
       context: ./client/
@@ -9,23 +46,6 @@ services:
     volumes:
       - ./client:/app
     ports:
-      - "3000:3000"
-  db:
-    image: mdillon/postgis
-    container_name: postgres-server
-    ports:
-      - "5432:5432"
-    environment:
-      POSTGRES_PASSWORD: Pa55word
-      POSTGRES_USER: friendly
-      POSTGRES_DB: perioddignitydb
-  server:
-    build:
-      context: ./server/
-    container_name: django-server
-    volumes:
-      - ./server:/code
-    ports:
-      - "8000:8000"
+      - "${FRONTEND_PORT}:${FRONTEND_PORT}"
     depends_on:
-      - db
+      - server
