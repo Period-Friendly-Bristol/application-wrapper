@@ -17,8 +17,6 @@ services:
     build:
       context: ./server/
     container_name: django-server
-    volumes:
-      - ./server:/code
     ports:
       - "${DJANGO_PORT}:${DJANGO_PORT}"
     environment:
@@ -38,14 +36,26 @@ services:
       - db
 
   # ReactJS front-end website.
+  # Production:
   client:
     build: 
       context: ./client/
     image: client:latest
-    command: "npm start"
-    volumes:
-      - ./client:/app
     ports:
-      - "${FRONTEND_PORT}:${FRONTEND_PORT}"
+      - "80:${FRONTEND_PORT}"
     depends_on:
       - server
+  
+  # Development:
+  # 1. Change FRONTEND_PORT in .env from 80 to 3000
+  # 2. Comment out the above client section.
+  # 3. Uncomment the below client section.
+  # client:
+  # build:
+  #   context: ./client/
+  #   dockerfile: Dockerfile.dev
+  # image: client:latest
+  # ports:
+  #   - "80:${FRONTEND_PORT}"
+  # depends_on:
+  #   - server
