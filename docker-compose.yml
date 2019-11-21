@@ -5,6 +5,7 @@ services:
   db:
     image: mdillon/postgis
     container_name: postgres-server
+    restart: always
     ports:
       - "${DATABASE_PORT}:${DATABASE_PORT}"
     environment:
@@ -17,6 +18,7 @@ services:
     build:
       context: ./server/
     container_name: django-server
+    restart: always
     ports:
       - "${DJANGO_PORT}:${DJANGO_PORT}"
     environment:
@@ -41,6 +43,7 @@ services:
     build: 
       context: ./client/
     image: client:latest
+    restart: always
     ports:
       - "80:${FRONTEND_PORT}"
     depends_on:
@@ -55,6 +58,7 @@ services:
   #   context: ./client/
   #   dockerfile: Dockerfile.dev
   # image: client:latest
+  # restart: always
   # ports:
   #   - "80:${FRONTEND_PORT}"
   # depends_on:
