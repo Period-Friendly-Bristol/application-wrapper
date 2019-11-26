@@ -8,7 +8,7 @@ run `./setup.sh` in root folder
 If you encounter `command not found` error, run `chmod +x setup.sh`
 
 ## Running the whole stack
-run `docker-compose up server` and go to `localhost:3000` to access the Frontend
+run `docker-compose up server` and go to `localhost:3000` to access the site
 
 ## Running Django Server
 
