@@ -35,3 +35,9 @@ To provision the applications in a local staging environment, follow these steps
 7. `cd` to the `ansible` directory
 8. Acquire the Ansible Vault password from the system administrator, and enter this into a file called `vault_password`
 9. Run the Ansible Playbook to provision the VM using the command `ansible-playbook -i inventory.cfg --vault-id @vault_password site.yml`
+
+## Info
+
+The `.rsync-filter` file specifies which files to exclude when synchronising files between the Ansible Host and the target VM.
+
+Environment variables specified in `.env` are loaded by `docker-compose`. This file provides sensible defaults, however, most of these are overridden by Ansible. For example, in `ansible/roles/period_poverty/tasks/main.yml`, environment variables are overridden with Ansible variables (spefified in `defaults/main.yml` or `vars/main.yml`).
