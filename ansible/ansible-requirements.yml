@@ -1,0 +1,5 @@
+---
+- geerlingguy.docker
+- geerlingguy.repo-epel
+- geerlingguy.pip
+- linuxhq.yum

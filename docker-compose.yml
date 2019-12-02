@@ -12,6 +12,8 @@ services:
       - POSTGRES_DB=${POSTGRES_DB}
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - data_volume:/var/lib/postgresql/data
 
   # Django Python API.
   server:
@@ -25,41 +27,29 @@ services:
       - POSTGRES_DB=${POSTGRES_DB}
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - DATABASE_HOST=${DATABASE_HOST}
       - DATABASE_PORT=${DATABASE_PORT}
+      - DATABASE_HOST=postgres-server
 
       - DJANGO_PORT=${DJANGO_PORT}
       - DJANGO_ADMIN=${DJANGO_ADMIN}
       - DJANGO_PASSWORD=${DJANGO_PASSWORD}
-      - SECRET_KEY=${SECRET_KEY}
+      - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
 
-      - DEBUG=${DEBUG}
+      - DJANGO_DEBUG=${DJANGO_DEBUG}
     depends_on:
       - db
 
   # ReactJS front-end website.
-  # Production:
   client:
     build: 
       context: ./client/
+      dockerfile: ${FRONTEND_DOCKERFILE}
     image: client:latest
     restart: always
     ports:
-      - "80:${FRONTEND_PORT}"
+      - "${FRONTEND_INTERNAL_PORT}:${FRONTEND_PORT}"
     depends_on:
       - server
-  
-  # Development:
-  # 1. Change FRONTEND_PORT in .env from 80 to 3000
-  # 2. Comment out the above client section.
-  # 3. Uncomment the below client section.
-  # client:
-  # build:
-  #   context: ./client/
-  #   dockerfile: Dockerfile.dev
-  # image: client:latest
-  # restart: always
-  # ports:
-  #   - "80:${FRONTEND_PORT}"
-  # depends_on:
-  #   - server
+
+volumes:
+  data_volume:

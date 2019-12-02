@@ -1,0 +1,14 @@
+# Role variables.
+pp_destination_folder: /home/vagrant/period-dignity-app-wrapper/
+
+# PSQL variables.
+postgres_user: friendly
+postgres_db: perioddignitydb
+postgres_password: Pa55word
+database_port: 5432
+
+# Django variables.
+django_admin: admin
+django_password: Pa55word
+django_secret_key: 1#hqm$s5c&2l977vc(9u+@09qc@cvy3th*k4f30y#&vj0+$gxs
+django_debug: false

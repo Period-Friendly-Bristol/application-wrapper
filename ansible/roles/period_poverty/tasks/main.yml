@@ -1,0 +1,21 @@
+---
+- name: Copy the project files
+  synchronize:
+    src: "{{ playbook_dir }}/.."
+    dest: "{{ pp_destination_folder }}"
+
+- name: Start the Docker applications
+  command: 
+    cmd: /usr/local/bin/docker-compose up --build -d
+    chdir: "{{ pp_destination_folder }}"
+    
+  environment:
+    DJANGO_ADMIN: "{{ django_admin }}"
+    DJANGO_PASSWORD: "{{ django_password }}"
+    DJANGO_SECRET_KEY: "{{ django_secret_key }}"
+    DJANGO_DEBUG: "{{ django_debug }}"
+
+    POSTGRES_USER: "{{ postgres_user }}"
+    POSTGRES_DB: "{{ postgres_db }}"
+    POSTGRES_PASSWORD: "{{ postgres_password }}"
+    DATABASE_PORT: "{{ database_port }}"

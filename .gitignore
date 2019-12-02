@@ -1,2 +1,5 @@
 server/
 client/
+.vagrant
+.vscode
+ansible/vault_password

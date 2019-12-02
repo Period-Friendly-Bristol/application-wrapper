@@ -1,0 +1,26 @@
+---
+- hosts: pp_server
+
+  roles:
+    # Update yum.
+    - role: linuxhq.yum
+      yum_update: yes
+
+    # Install Extra Packages for Enterprise Linux.
+    - role: geerlingguy.repo-epel
+
+    # Install Docker Python modules.
+    - role: geerlingguy.pip
+      vars:
+        pip_install_packages:
+          - name: docker
+
+    # Install Docker.
+    - role: geerlingguy.docker
+      vars:
+        ansible_become: yes
+        docker_users:
+          - vagrant
+
+    # Install the Period Poverty applications.
+    - role: period_poverty
