@@ -34,7 +34,7 @@ To provision the applications in a local staging environment, follow these steps
 6. Start the VM using the Vagrant command `vagrant up` (this starts a VM with the configuration defined in `Vagrantfile`)
 7. `cd` to the `ansible` directory
 8. Acquire the Ansible Vault password from the system administrator, and enter this into a file called `vault_password`
-9. Run the Ansible Playbook to provision the VM using the command `ansible-playbook -i inventory.cfg --vault-id @vault_password site.yml`
+9. Follow the remaining instructions in `ansible/README.md#Deployment`
 
 ## Info
 
