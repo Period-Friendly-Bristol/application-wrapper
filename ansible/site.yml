@@ -1,5 +1,5 @@
 ---
-- hosts: pp_server
+- hosts: pfb_server
 
   roles:
     # Update yum.
@@ -20,7 +20,7 @@
       vars:
         ansible_become: yes
         docker_users:
-          - vagrant
+          - "{{ ansible_user }}"
 
     # Install the Period Poverty applications.
     - role: period_poverty

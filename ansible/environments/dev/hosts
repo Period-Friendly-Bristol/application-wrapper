@@ -1,2 +1,2 @@
-[pp_server]
+[pfb_server]
 172.50.10.10 ansible_user=vagrant
