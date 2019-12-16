@@ -1,2 +1,2 @@
 [pfb_server]
-172.50.10.10 ansible_user=vagrant
+172.50.10.11 ansible_user=vagrant
