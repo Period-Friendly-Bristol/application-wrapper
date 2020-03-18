@@ -23,15 +23,9 @@ React-scripts are not running, we are probably using the production dockerfile.
 
 Edit `/.env`
 Comment out `FRONTEND_DOCKERFILE=Dockerfile.prod`
+Comment out `FRONTEND_INTERNAL_PORT=80`
 Uncomment `FRONTEND_DOCKERFILE=Dockerfile`
-
-visit `localhost:3000`
-
-If it still doesn't work, we can start it manually
-
-run `cd client`
-run `npm install`
-run `npm start`
+Uncomment `FRONTEND_INTERNAL_PORT=3000`
 
 visit `localhost:3000`
 
