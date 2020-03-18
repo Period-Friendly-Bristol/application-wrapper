@@ -19,11 +19,11 @@ go to `localhost:3000` to access the site
 
 #### `ERR_CONNECTION_REFUSED` on localhost:3000
 
-React-scripts are not running
+React-scripts are not running, we are probably using the production dockerfile.
 
-run `cd client`
-run `npm install`
-run `npm start`
+Edit `/.env`
+Comment out `FRONTEND_DOCKERFILE=Dockerfile.prod`
+Uncomment `FRONTEND_DOCKERFILE=Dockerfile`
 
 visit `localhost:3000`
 
