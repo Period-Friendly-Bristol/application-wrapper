@@ -12,7 +12,38 @@ If you encounter `command not found` error, run `chmod +x setup.sh`
 
 ## Running the whole stack
 
-run `docker-compose up server` and go to `localhost:3000` to access the site
+run `docker-compose up`
+go to `localhost:3000` to access the site
+
+### Troubleshooting common errors
+
+#### `ERR_CONNECTION_REFUSED` on localhost:3000
+
+React-scripts are not running
+
+run `cd client`
+run `npm install`
+run `npm start`
+
+visit `localhost:3000`
+
+#### `FATAL: password authentication failed for user "friendly"`
+
+You need to clean out old pfb containers which include the database.
+
+_Warning these commands will delete data from other docker containers so make sure everything you need is backed up or you know what you are doing._
+
+run `docker-compose stop && docker-compose rm && docker volume prune`
+
+run `docker ps -a` to check there are no pfb containers remaining.
+
+run `docker-compose up` again.
+
+#### `Error starting userland proxy: listen tcp 0.0.0.0:80: bind: address already in use`
+
+You need to stop Apache.
+
+Try `sudo apachectl stop`
 
 ## Running Django Server
 
