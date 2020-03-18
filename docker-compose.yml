@@ -35,6 +35,9 @@ services:
       - DJANGO_PASSWORD=${DJANGO_PASSWORD}
       - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
 
+      - ADMIN_SITE_TITLE=${ADMIN_SITE_TITLE}
+      - SITE_URL=${SITE_URL}
+
       - DJANGO_DEBUG=${DJANGO_DEBUG}
     depends_on:
       - db

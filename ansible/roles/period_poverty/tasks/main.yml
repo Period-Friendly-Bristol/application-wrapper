@@ -19,3 +19,6 @@
     POSTGRES_DB: "{{ postgres_db }}"
     POSTGRES_PASSWORD: "{{ postgres_password }}"
     DATABASE_PORT: "{{ database_port }}"
+
+    ADMIN_SITE_TITLE: "{{ admin_site_title }}"
+    SITE_URL: "{{ site_url }}"

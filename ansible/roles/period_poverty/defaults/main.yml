@@ -12,3 +12,7 @@ django_admin: admin
 django_password: Pa55word
 django_secret_key: 1#hqm$s5c&2l977vc(9u+@09qc@cvy3th*k4f30y#&vj0+$gxs
 django_debug: false
+
+# Admin site variables.
+admin_site_title: PFB Admin
+site_url: http://127.0.0.1
