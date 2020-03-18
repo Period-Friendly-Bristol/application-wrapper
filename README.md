@@ -27,6 +27,14 @@ Uncomment `FRONTEND_DOCKERFILE=Dockerfile`
 
 visit `localhost:3000`
 
+If it still doesn't work, we can start it manually
+
+run `cd client`
+run `npm install`
+run `npm start`
+
+visit `localhost:3000`
+
 #### `FATAL: password authentication failed for user "friendly"`
 
 You need to clean out old pfb containers which include the database.
