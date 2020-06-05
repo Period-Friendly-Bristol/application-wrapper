@@ -1,2 +1,3 @@
 # Admin site variables.
 site_url: https://www.periodfriendlybristol.org
+pp_destination_folder: /home/centos/period-dignity-app-wrapper/
