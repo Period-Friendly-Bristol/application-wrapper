@@ -20,7 +20,7 @@ To re-build all applications (which is the simplest way of ensuring changes show
 
 ## Deploying
 
-To deploy the applications on Bristol Is Open's cloud infrastructure, you must be connected to their network using a VPN.
+To deploy the applications on Bristol Is Open's cloud infrastructure, you must be connected to their network using a VPN and your public SSH key must have been inserted into the production server.
 
 Additionally, you must have Ansible installed on your local machine. Follow these steps to get set up:
 
