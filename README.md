@@ -65,3 +65,35 @@ The `.rsync-filter` file specifies which files to exclude when synchronising fil
 Environment variables specified in `.env` are loaded by `docker-compose` and are passed to containers using the `args` and `environment` options in the `docker-compose.yml` file. The `.env` file provides sensible defaults, however, most of these are overridden by Ansible. For example, in `ansible/roles/period_poverty/tasks/main.yml`, we can see that we override environment variables using Ansible variables. 
 
 Ansible variables are spefified in `ansible/roles/period_poverty/defaults/main.yml`, `ansible/roles/period_poverty/vars/main.yml`, and `ansible/environments/prod/group_vars/all.yml`. The order of precedence in this list is least to highest - [more information can be found here](https://docs.ansible.com/ansible/2.5/user_guide/playbooks_variables.html#variable-precedence-where-should-i-put-a-variable).
+
+### Troubleshooting common errors
+
+#### `ERR_CONNECTION_REFUSED` on localhost:3000
+
+React-scripts are not running, we are probably using the production dockerfile.
+
+Edit `/.env`
+Comment out `FRONTEND_DOCKERFILE=Dockerfile.prod`
+Comment out `FRONTEND_INTERNAL_PORT=80`
+Uncomment `FRONTEND_DOCKERFILE=Dockerfile`
+Uncomment `FRONTEND_INTERNAL_PORT=3000`
+
+Visit `localhost:3000`
+
+#### `FATAL: password authentication failed for user "friendly"`
+
+You need to clean out old pfb containers which include the database.
+
+_Warning these commands will delete data from other docker containers so make sure everything you need is backed up or you know what you are doing._
+
+run `docker-compose stop && docker-compose rm && docker volume prune`
+
+run `docker ps -a` to check there are no pfb containers remaining.
+
+run `docker-compose up` again.
+
+#### `Error starting userland proxy: listen tcp 0.0.0.0:80: bind: address already in use`
+
+You need to stop an application that's already running on port 80. This is most likely a web server.
+
+Try `sudo apachectl stop` or `sudo nginx -s stop`
