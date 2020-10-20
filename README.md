@@ -10,7 +10,7 @@ To set this project up for running locally, or in preparation for deployment, fi
 
 ## Running locally
 
-To run a local developement version of the site, simply run `docker compose up`.
+To run a local developement version of the site, simply run `docker-compose up`.
 
 If you make changes to an application, e.g. `server` or `client`, you will need to re-build the application before running `docker-compose up` to see the changes.
 
