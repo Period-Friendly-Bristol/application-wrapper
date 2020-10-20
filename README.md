@@ -1,43 +1,67 @@
 # Period Dignity Application Wrapper
 
-This is a simple wrapper to host setup and Docker compose file for all the containers for the Period Dignity Application.
+This repository joins the client and the server applications using submodules and docker-compose.
 
-Ansible is used to provision the production infrastructure. You can use Vagrant to create a VM to test this provisioning in.
+Additionally, it stores the Ansible deployment scripts that are used to provision these applications on a server.
 
-## Installation
+## Setup
 
-run `./setup.sh` in root folder
+To set this project up for running locally, or in preparation for deployment, first clone the repository and then run `./setup.sh` to initialise the submodules.
 
-If you encounter `command not found` error, run `chmod +x setup.sh`
+## Running locally
 
-## Running the whole stack
+To run a local developement version of the site, simply run `docker compose up`.
 
-run `docker-compose up server` and go to `localhost:3000` to access the site
+If you make changes to an application, e.g. `server` or `client`, you will need to re-build the application before running `docker-compose up` to see the changes.
 
-## Running Django Server
+To re-build a specific application, run `docker-compose build {server,client}`. The name `server` or `client` come from the `docker-compose.yml` file.
 
-run `docker-compose up server`
+To re-build all applications (which is the simplest way of ensuring changes show up when developing), run `docker-compose up --build`.
 
-## Running Commands in Server
+## Deploying
 
-run `docker-compose run --rm server bash`
+To deploy the applications on Bristol Is Open's cloud infrastructure, you must be connected to their network using a VPN.
 
-## Provisioning
+Additionally, you must have Ansible installed on your local machine. Follow these steps to get set up:
 
-To provision the applications in a local staging environment, follow these steps:
+### Ansible setup
 
-1. Download Virtualbox to spin up VMs by following [these instructions](https://www.virtualbox.org/wiki/Downloads)
-2. Download Vagrant to manage these VMs by following [these instructions](https://www.vagrantup.com/downloads.html)
-3. Download Ansible to provision these VMs by following [these instructions](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#latest-releases-via-pip) - scroll down a bit to install inside a Python virtual environment
-4. Ensure the IP addresses defined in `Vagrantfile` and `ansible/inventory.cfg` are the same and are free on your network
-5. Open a linux shell & `cd` to this `period-dignity-app-wrapper` directory
-6. Start the VM using the Vagrant command `vagrant up` (this starts a VM with the configuration defined in `Vagrantfile`)
-7. `cd` to the `ansible` directory
-8. Acquire the Ansible Vault password from the system administrator, and enter this into a file called `vault_password`
-9. Follow the remaining instructions in `ansible/README.md#Deployment`
+```bash
+# Move to the ansible directory
+cd period-dignity-app-wrapper/ansible
 
-## Info
+# Create the Ansible virtual environment
+python3 -m venv ~/ansible-env
+
+# Activate the ansible environment
+source ~/ansible-env/bin/activate
+
+# Install Ansible
+pip install ansible
+
+# Install the third-party Ansible roles used in the playbook
+ansible-galaxy install -r ansible-requirements.yml
+```
+
+### Ansible deployment
+
+Deploy to the production server, follow the these steps:
+
+```bash
+# Move to the ansible directory
+cd period-dignity-app-wrapper/ansible
+
+# Activate the ansible environment
+source ~/ansible-env/bin/activate
+
+# Deploy the applications
+ansible-playbook -i environments/prod site.yml
+```
+
+## Extra info
 
 The `.rsync-filter` file specifies which files to exclude when synchronising files between the Ansible Host and the target VM.
 
-Environment variables specified in `.env` are loaded by `docker-compose`. This file provides sensible defaults, however, most of these are overridden by Ansible. For example, in `ansible/roles/period_poverty/tasks/main.yml`, environment variables are overridden with Ansible variables (spefified in `defaults/main.yml` or `vars/main.yml`).
+Environment variables specified in `.env` are loaded by `docker-compose` and are passed to containers using the `args` and `environment` options in the `docker-compose.yml` file. The `.env` file provides sensible defaults, however, most of these are overridden by Ansible. For example, in `ansible/roles/period_poverty/tasks/main.yml`, we can see that we override environment variables using Ansible variables. 
+
+Ansible variables are spefified in `ansible/roles/period_poverty/defaults/main.yml`, `ansible/roles/period_poverty/vars/main.yml`, and `ansible/environments/prod/group_vars/all.yml`. The order of precedence in this list is least to highest - [more information can be found here](https://docs.ansible.com/ansible/2.5/user_guide/playbooks_variables.html#variable-precedence-where-should-i-put-a-variable).
