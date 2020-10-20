@@ -1,5 +1,3 @@
-server/
-client/
+ansible/vault_password
 .vagrant
 .vscode
-ansible/vault_password
