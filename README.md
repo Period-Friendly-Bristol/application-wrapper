@@ -2,7 +2,7 @@
 
 This repository joins the client and the server applications using submodules and docker-compose.
 
-Additionally, it stores the Ansible deployment scripts that are used to provision these applications on a server.
+Additionally, it holds the Ansible deployment scripts that are used to provision these applications on a server.
 
 ## Setup
 
